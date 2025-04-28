@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pulldown_button/src/internals/utils/extensions.dart';
+import 'package:pulldown_button/src/items/divider.dart';
 
 import '../pulldown_button.dart';
 import 'internals/menu_config.dart';
 import 'internals/route/route.dart';
-import 'theme/route_theme.dart';
 
 /// Used to provide information about menu animation state in
 /// [PullDownButton.animationBuilder].
@@ -205,11 +205,23 @@ class _PulldownButtonState extends State<PulldownButton> {
       button = _anchorToButtonPart(context, button, widget.buttonAnchor!);
     }
 
-    final animationAlignment = Alignment.bottomRight;
-
-    final items = widget.itemBuilder(context);
+    var items = widget.itemBuilder(context);
 
     if (items.isEmpty) return;
+
+    items = MenuSeparator.wrapVerticalList(items);
+
+    double height = 0.0;
+
+    for (var item in items) {
+      height += item.preferredSize.height;
+    }
+
+    final animationAlignment = PulldownMenuRoute.animationAlignment(
+      context,
+      button,
+      height,
+    );
 
     final hasLeading = MenuConfig.menuHasLeading(items);
 
@@ -223,6 +235,7 @@ class _PulldownButtonState extends State<PulldownButton> {
       hasLeading: hasLeading,
       animationAlignment: animationAlignment,
       menuOffset: widget.menuOffset,
+      menuHeight: height,
       scrollController: widget.scrollController,
       useRootNavigator: widget.useRootNavigator,
       routeSettings: widget.routeSettings,
@@ -258,6 +271,7 @@ Future<VoidCallback?> _showMenu<VoidCallback>({
   required bool hasLeading,
   required Alignment animationAlignment,
   required double menuOffset,
+  required double menuHeight,
   required ScrollController? scrollController,
   required bool useRootNavigator,
   required RouteSettings? routeSettings,
@@ -277,6 +291,7 @@ Future<VoidCallback?> _showMenu<VoidCallback>({
       hasLeading: hasLeading,
       alignment: animationAlignment,
       menuOffset: menuOffset,
+      menuHeight: menuHeight,
       scrollController: scrollController,
       settings: routeSettings,
     ),
@@ -310,13 +325,17 @@ Rect _anchorToButtonPart(
 String _barrierLabel(BuildContext context) {
   // Use this instead of `MaterialLocalizations.of(context)` because
   // [MaterialLocalizations] might be null in some cases.
-  final materialLocalizations =
-      Localizations.of<MaterialLocalizations>(context, MaterialLocalizations);
+  final materialLocalizations = Localizations.of<MaterialLocalizations>(
+    context,
+    MaterialLocalizations,
+  );
 
   // Use this instead of `CupertinoLocalizations.of(context)` because
   // [CupertinoLocalizations] might be null in some cases.
-  final cupertinoLocalizations =
-      Localizations.of<CupertinoLocalizations>(context, CupertinoLocalizations);
+  final cupertinoLocalizations = Localizations.of<CupertinoLocalizations>(
+    context,
+    CupertinoLocalizations,
+  );
 
   // If both localizations are null, fallback to
   // [DefaultMaterialLocalizations().modalBarrierDismissLabel].

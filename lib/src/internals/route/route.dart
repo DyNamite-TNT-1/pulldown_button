@@ -20,6 +20,7 @@ class PulldownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
     required this.hasLeading,
     required this.alignment,
     required this.menuOffset,
+    required this.menuHeight,
     required this.scrollController,
     required super.settings,
   });
@@ -47,6 +48,8 @@ class PulldownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
 
   /// Is used to define additional on-side offset to the menu's final position.
   final double menuOffset;
+
+  final double menuHeight;
 
   /// A scroll controller that can be used to control the scrolling of the
   /// [items] in the menu.
@@ -98,6 +101,13 @@ class PulldownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
   ) {
     final mediaQuery = MediaQuery.of(context);
 
+    final theme = PullDownMenuRouteTheme.resolve(
+      context,
+      routeTheme: routeTheme,
+    );
+
+    final avoidBounds = DisplayFeatureSubScreen.avoidBounds(mediaQuery).toSet();
+
     return SwipeRegion(
       child: MediaQuery.removePadding(
         context: context,
@@ -109,12 +119,45 @@ class PulldownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
           delegate: _PopupMenuRouteLayout(
             buttonRect: buttonRect,
             padding: mediaQuery.padding,
+            avoidBounds: avoidBounds,
             menuOffset: menuOffset,
+            menuSize: Size(theme.width ?? buttonRect.width, menuHeight),
           ),
           child: capturedThemes.wrap(child),
         ),
       ),
     );
+  }
+
+  static Alignment animationAlignment(
+    BuildContext context,
+    Rect buttonRect,
+    double menuHeight,
+  ) {
+    final size = MediaQuery.of(context).size;
+
+    final horizontalPosition = _MenuHorizontalPosition.get(size, buttonRect);
+
+    final verticalPosition = _MenuVerticalPosition.get(
+      size,
+      buttonRect,
+      menuHeight,
+    );
+
+    return switch (horizontalPosition) {
+      _MenuHorizontalPosition.right
+          when verticalPosition == _MenuVerticalPosition.top =>
+        Alignment.bottomRight,
+      _MenuHorizontalPosition.right => Alignment.topRight,
+      _MenuHorizontalPosition.left
+          when verticalPosition == _MenuVerticalPosition.top =>
+        Alignment.bottomLeft,
+      _MenuHorizontalPosition.left => Alignment.topLeft,
+      _MenuHorizontalPosition.center
+          when verticalPosition == _MenuVerticalPosition.top =>
+        Alignment.bottomCenter,
+      _MenuHorizontalPosition.center => Alignment.topCenter,
+    };
   }
 }
 
@@ -160,5 +203,22 @@ enum _MenuHorizontalPosition {
     } else {
       return _MenuHorizontalPosition.right;
     }
+  }
+}
+
+enum _MenuVerticalPosition {
+  top,
+  bottom;
+
+  static _MenuVerticalPosition get(
+    Size size,
+    Rect buttonRect,
+    double menuHeight,
+  ) {
+    final isEnoughBottomSpace = size.height - buttonRect.bottom >= menuHeight;
+
+    if (isEnoughBottomSpace) return _MenuVerticalPosition.bottom;
+
+    return _MenuVerticalPosition.top;
   }
 }

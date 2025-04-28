@@ -26,22 +26,13 @@ class MenuDecoration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget box = ColoredBox(
-      color: backgroundColor,
-      child: child,
-    );
+    Widget box = ColoredBox(color: backgroundColor, child: child);
 
     if (BlurUtils.useBackdropFilter(backgroundColor)) {
-      box = BackdropFilter(
-        filter: BlurUtils.menuBlur(context),
-        child: box,
-      );
+      box = BackdropFilter(filter: BlurUtils.menuBlur(context), child: box);
     }
 
-    return ClipRRect(
-      borderRadius: borderRadius,
-      child: box,
-    );
+    return ClipRRect(borderRadius: borderRadius, child: box);
   }
 }
 
@@ -89,9 +80,7 @@ class _MenuBodyState extends State<MenuBody> {
         primary: false,
         clipBehavior: Clip.none,
         controller: _effectiveScrollController,
-        child: ListBody(
-          children: MenuSeparator.wrapVerticalList(widget.items),
-        ),
+        child: ListBody(children: widget.items),
       ),
     );
 
@@ -103,10 +92,9 @@ class _MenuBodyState extends State<MenuBody> {
       child: switch (defaultTargetPlatform) {
         TargetPlatform.android || TargetPlatform.iOS => child,
         _ => ScrollConfiguration(
-            behavior:
-                ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: child,
-          ),
+          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+          child: child,
+        ),
       },
     );
   }

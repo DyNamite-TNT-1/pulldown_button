@@ -1,7 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 
-final class AnimationUtils {
+class AnimationUtils {
   /// Pull-down menu animation duration.
   static const Duration kMenuDuration = Duration(milliseconds: 300);
 
@@ -20,8 +19,7 @@ final class AnimationUtils {
   );
 }
 
-
-final class ClampedAnimation extends Animation<double>
+class ClampedAnimation extends Animation<double>
     with AnimationWithParentMixin<double> {
   /// Creates [ClampedAnimation].
   ClampedAnimation(this.parent);
