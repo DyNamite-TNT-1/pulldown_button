@@ -48,7 +48,12 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
     final subScreen = _PositionUtils.closestScreen(subScreens, originCenter);
 
     final dx = _PositionUtils.fitX(x, subScreen, childWidth, padding);
-    final dy = _PositionUtils.fitY(buttonRect, subScreen, menuSize.height);
+    final dy = _PositionUtils.fitY(
+      buttonRect,
+      subScreen,
+      menuSize.height,
+      padding,
+    );
 
     return Offset(dx, dy);
   }
@@ -79,17 +84,24 @@ abstract class _PositionUtils {
   }
 
   /// Returns the `y` a top left offset point for menu's container.
-  static double fitY(Rect buttonRect, Rect screen, double menuHeight) {
+  static double fitY(
+    Rect buttonRect,
+    Rect screen,
+    double menuHeight,
+    EdgeInsets padding,
+  ) {
     var y = buttonRect.top;
     final buttonHeight = buttonRect.height;
 
-    final isEnoughBottomSpace = screen.bottom - buttonRect.bottom >= menuHeight;
+    final isEnoughBottomSpace =
+        screen.height - padding.bottom - buttonRect.bottom >= menuHeight;
 
-    final padding = buttonHeight < kMinInteractiveDimensionCupertino ? 5 : 0;
+    final additionalPadding =
+        buttonHeight < kMinInteractiveDimensionCupertino ? 5 : 0;
 
     !isEnoughBottomSpace
-        ? y -= menuHeight + padding
-        : y += buttonHeight + padding;
+        ? y -= menuHeight + additionalPadding
+        : y += buttonHeight + additionalPadding;
 
     return y;
   }

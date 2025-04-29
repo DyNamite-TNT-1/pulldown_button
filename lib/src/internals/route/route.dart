@@ -134,12 +134,17 @@ class PulldownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
     Rect buttonRect,
     double menuHeight,
   ) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery.sizeOf(context);
+
+    final padding = MediaQuery.paddingOf(context);
 
     final horizontalPosition = _MenuHorizontalPosition.get(size, buttonRect);
 
     final verticalPosition = _MenuVerticalPosition.get(
-      size,
+      Size(
+        size.width - padding.left - padding.right,
+        size.height - padding.bottom,
+      ),
       buttonRect,
       menuHeight,
     );

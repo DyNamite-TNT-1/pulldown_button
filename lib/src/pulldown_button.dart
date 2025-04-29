@@ -217,8 +217,10 @@ class _PulldownButtonState extends State<PulldownButton> {
       height += item.preferredSize.height;
     }
 
+    // Use [navigator.context] to retrieve the full MediaQuery padding,
+    // unaffected by any SafeArea widgets higher in the widget tree.
     final animationAlignment = PulldownMenuRoute.animationAlignment(
-      context,
+      navigator.context,
       button,
       height,
     );
