@@ -150,5 +150,5 @@ class MenuSeparator extends StatelessWidget implements PullDownMenuEntry {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(1.0);
+  Size get preferredSize => Size.fromHeight(_kMenuDividerHeight);
 }
