@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../pulldown_button.dart';
 import '../internals/button.dart';
 import '../internals/content_size_category.dart';
 import '../internals/dimensions.dart';
 import '../internals/item_layout.dart';
 import '../internals/route/route.dart';
 import '../internals/utils/animation.dart';
-import '../theme/item_theme.dart';
-import 'entry.dart';
 
 const double _kItemVerticalPadding = 11;
 const double _kItemStartPadding = 16;
@@ -25,29 +24,29 @@ EdgeInsetsDirectional _itemPadding({required bool hasLeading}) =>
       bottom: _kItemVerticalPadding,
     );
 
-/// Signature used by [PullDownMenuItem] to resolve how [onTap] callback is
+/// Signature used by [PulldownMenuItem] to resolve how [onTap] callback is
 /// used.
 ///
 /// Default behavior is to pop the menu and call the [onTap].
 ///
-/// Used by [PullDownMenuItem.tapHandler] and [PullDownMenuHeader.tapHandler].
+/// Used by [PulldownMenuItem.tapHandler].
 ///
 /// See also:
 ///
-/// * [PullDownMenuItem.defaultTapHandler], a default tap handler.
-/// * [PullDownMenuItem.noPopTapHandler], a tap handler that immediately calls
+/// * [PulldownMenuItem.defaultTapHandler], a default tap handler.
+/// * [PulldownMenuItem.noPopTapHandler], a tap handler that immediately calls
 /// [onTap] without popping the menu.
-/// * [PullDownMenuItem.delayedTapHandler], a tap handler that pops the menu,
+/// * [PulldownMenuItem.delayedTapHandler], a tap handler that pops the menu,
 /// waits for an animation to end and calls the [onTap].
-typedef PullDownMenuItemTapHandler =
+typedef PulldownMenuItemTapHandler =
     void Function(BuildContext context, VoidCallback? onTap);
 
 /// An item in a cupertino style pull-down menu.
 ///
 /// To show a checkmark next to the pull-down menu item (an item with a
-/// selection state), use [PullDownMenuItem.selectable].
+/// selection state), use [PulldownMenuItem.selectable].
 @immutable
-class PulldownMenuItem extends StatelessWidget implements PullDownMenuEntry {
+class PulldownMenuItem extends StatelessWidget implements PulldownMenuEntry {
   /// Creates an item for a pull-down menu.
   ///
   /// By default, the item is [enabled].
@@ -105,7 +104,7 @@ class PulldownMenuItem extends StatelessWidget implements PullDownMenuEntry {
 
   /// Handler that provides this item's [BuildContext] as well as [onTap] to
   /// resolve how [onTap] callback is used.
-  final PullDownMenuItemTapHandler tapHandler;
+  final PulldownMenuItemTapHandler tapHandler;
 
   /// Whether the user is permitted to tap this item.
   ///
@@ -114,41 +113,41 @@ class PulldownMenuItem extends StatelessWidget implements PullDownMenuEntry {
   /// to indicate a disabled state.
   final bool enabled;
 
-  /// Title of this [PullDownMenuItem].
+  /// Title of this [PulldownMenuItem].
   final String title;
 
-  /// Subtitle of this [PullDownMenuItem].
+  /// Subtitle of this [PulldownMenuItem].
   final String? subtitle;
 
-  /// Theme of this [PullDownMenuItem].
+  /// Theme of this [PulldownMenuItem].
   ///
-  /// If this property is null, then [PullDownMenuItemTheme] from
-  /// [PullDownButtonTheme.itemTheme] is used.
+  /// If this property is null, then [PulldownMenuItemTheme] from
+  /// [PulldownButtonTheme.itemTheme] is used.
   ///
-  /// If that's null, then defaults from [PullDownMenuItemTheme.defaults] are
+  /// If that's null, then defaults from [PulldownMenuItemTheme.defaults] are
   /// used.
-  final PullDownMenuItemTheme? itemTheme;
+  final PulldownMenuItemTheme? itemTheme;
 
-  /// Icon of this [PullDownMenuItem].
+  /// Icon of this [PulldownMenuItem].
   ///
   /// If the [iconWidget] is used, this property must be null;
   ///
-  /// If used in [PullDownMenuActionsRow], either this or [iconWidget] are
+  /// If used in [PulldownMenuActionsRow], either this or [iconWidget] are
   /// required.
   final IconData? icon;
 
-  /// Color for this [PullDownMenuItem]'s [icon].
+  /// Color for this [PulldownMenuItem]'s [icon].
   ///
   /// If not provided, `textStyle.color` from [itemTheme] will be used.
   ///
-  /// If [PullDownMenuItem] `isDestructive`, then [iconColor] will be ignored.
+  /// If [PulldownMenuItem] `isDestructive`, then [iconColor] will be ignored.
   final Color? iconColor;
 
-  /// Custom icon widget of this [PullDownMenuItem].
+  /// Custom icon widget of this [PulldownMenuItem].
   ///
   /// If the [icon] is used, this property must be null;
   ///
-  /// If used in [PullDownMenuActionsRow], either this or [icon] is required.
+  /// If used in [PulldownMenuActionsRow], either this or [icon] is required.
   final Widget? iconWidget;
 
   /// Whether this item represents destructive action;
@@ -160,21 +159,21 @@ class PulldownMenuItem extends StatelessWidget implements PullDownMenuEntry {
   ///
   /// Defaults to `null`.
   ///
-  /// If [PullDownMenuItem] is used inside [PullDownMenuActionsRow] this
+  /// If [PulldownMenuItem] is used inside [PulldownMenuActionsRow] this
   /// property will be ignored, and a checkmark will not be shown.
   ///
-  /// When true, an [PullDownMenuItemTheme.checkmark] checkmark is displayed
+  /// When true, an [PulldownMenuItemTheme.checkmark] checkmark is displayed
   /// (from [itemTheme]).
   ///
-  /// If itemTheme is null, then defaults from [PullDownMenuItemTheme.defaults]
+  /// If itemTheme is null, then defaults from [PulldownMenuItemTheme.defaults]
   /// are used.
   final bool? selected;
 
-  /// Default tap handler for [PullDownMenuItem].
+  /// Default tap handler for [PulldownMenuItem].
   ///
   /// The behavior is to pop the menu and then call the [onTap].
   static void defaultTapHandler(BuildContext context, VoidCallback? onTap) {
-    // If the menu was opened from [PullDownButton] or [showPullDownMenu] - pop
+    // If the menu was opened from [PulldownButton] or [showPulldownMenu] - pop
     // route.
     if (ModalRoute.of(context) is PulldownMenuRoute) {
       Navigator.pop(context, onTap);
@@ -183,7 +182,7 @@ class PulldownMenuItem extends StatelessWidget implements PullDownMenuEntry {
     }
   }
 
-  /// An additional, pre-made tap handler for [PullDownMenuItem].
+  /// An additional, pre-made tap handler for [PulldownMenuItem].
   ///
   /// The behavior is to pop the menu, wait until the animation ends, and call
   /// the [onTap].
@@ -193,7 +192,7 @@ class PulldownMenuItem extends StatelessWidget implements PullDownMenuEntry {
   /// is a smoother transition between the pull-down menu and said navigation
   /// stack changing action.
   static void delayedTapHandler(BuildContext context, VoidCallback? onTap) {
-    // If the menu was opened from [PullDownButton] or [showPullDownMenu] - pop
+    // If the menu was opened from [PulldownButton] or [showPulldownMenu] - pop
     // route.
     if (ModalRoute.of(context) is PulldownMenuRoute) {
       Future<void> future() async {
@@ -208,7 +207,7 @@ class PulldownMenuItem extends StatelessWidget implements PullDownMenuEntry {
     }
   }
 
-  /// An additional, pre-made tap handler for [PullDownMenuItem].
+  /// An additional, pre-made tap handler for [PulldownMenuItem].
   ///
   /// The behavior is to call the [onTap] without popping the menu.
   static void noPopTapHandler(BuildContext _, VoidCallback? onTap) =>
@@ -219,7 +218,7 @@ class PulldownMenuItem extends StatelessWidget implements PullDownMenuEntry {
 
   @override
   Widget build(BuildContext context) {
-    final theme = PullDownMenuItemTheme.resolve(context, itemTheme: itemTheme);
+    final theme = PulldownMenuItemTheme.resolve(context, itemTheme: itemTheme);
 
     final isEnabled = enabled && onTap != null;
 
@@ -310,7 +309,7 @@ class _PulldownMenuItemView extends StatelessWidget {
     }
 
     if (!enabled) {
-      final disabledOpacity = PullDownMenuItemTheme.disabledOpacity(context);
+      final disabledOpacity = PulldownMenuItemTheme.disabledOpacity(context);
 
       resolvedColor = resolvedColor.withValues(alpha: disabledOpacity);
       resolvedStyle = resolvedStyle.copyWith(

@@ -6,4 +6,3 @@ export 'src/theme/divider_theme.dart';
 export 'src/theme/item_theme.dart';
 export 'src/theme/route_theme.dart';
 export 'src/theme/theme.dart';
-export 'src/theme/title_theme.dart';

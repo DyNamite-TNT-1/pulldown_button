@@ -6,11 +6,12 @@ import '../../items/entry.dart';
 import '../menu_config.dart';
 import '../utils/animation.dart';
 import 'route_menu.dart';
+import '../../theme/theme.dart';
 
 part 'route_layout.dart';
 
 class PulldownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
-  /// Creates [PullDownMenuRoute].
+  /// Creates [PulldownMenuRoute].
   PulldownMenuRoute({
     required this.items,
     required this.barrierLabel,
@@ -25,17 +26,17 @@ class PulldownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
     required super.settings,
   });
 
-  /// Items to show in the [RoutePullDownMenu] created by this route.
-  final List<PullDownMenuEntry> items;
+  /// Items to show in the [RoutePulldownMenu] created by this route.
+  final List<PulldownMenuEntry> items;
 
-  /// Captured inherited themes, specifically [PullDownButtonInheritedTheme],
-  /// to pass to [RoutePullDownMenu] and all its [items].
+  /// Captured inherited themes, specifically [PulldownButtonInheritedTheme],
+  /// to pass to [RoutePulldownMenu] and all its [items].
   final CapturedThemes capturedThemes;
 
-  /// The custom route theme to be used by [RoutePullDownMenu].
-  final PullDownMenuRouteTheme? routeTheme;
+  /// The custom route theme to be used by [RoutePulldownMenu].
+  final PulldownMenuRouteTheme? routeTheme;
 
-  /// Whether the pull-down menu has any [PullDownMenuItem]s with leading
+  /// Whether the pull-down menu has any [PulldownMenuItem]s with leading
   /// widget such as chevron.
   final bool hasLeading;
 
@@ -101,7 +102,7 @@ class PulldownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
   ) {
     final mediaQuery = MediaQuery.of(context);
 
-    final theme = PullDownMenuRouteTheme.resolve(
+    final theme = PulldownMenuRouteTheme.resolve(
       context,
       routeTheme: routeTheme,
     );
@@ -168,7 +169,7 @@ class PulldownMenuRoute<VoidCallback> extends PopupRoute<VoidCallback> {
 
 /// A predicted menu's horizontal position.
 ///
-/// Is used by [PullDownMenuRoute.animationAlignment]
+/// Is used by [PulldownMenuRoute.animationAlignment]
 enum _MenuHorizontalPosition {
   /// The button's left side is located closer to the left side of the screen
   /// than the button's right side to the right side of the screen.

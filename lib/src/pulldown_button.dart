@@ -8,41 +8,41 @@ import 'internals/menu_config.dart';
 import 'internals/route/route.dart';
 
 /// Used to provide information about menu animation state in
-/// [PullDownButton.animationBuilder].
+/// [PulldownButton.animationBuilder].
 ///
-/// Used by [PullDownButtonAnimationBuilder].
-enum PullDownButtonAnimationState {
+/// Used by [PulldownButtonAnimationBuilder].
+enum PulldownButtonAnimationState {
   /// The menu is closed.
   closed,
 
   /// The menu is opened by calling [showMenu] using
-  /// [PullDownButton.buttonBuilder]'s button widget.
+  /// [PulldownButton.buttonBuilder]'s button widget.
   opened;
 
-  /// Whether the [PullDownMenuButtonBuilder]s button is pressed and the menu
+  /// Whether the [PulldownMenuButtonBuilder]s button is pressed and the menu
   /// is open.
-  bool get isOpen => this == PullDownButtonAnimationState.opened;
+  bool get isOpen => this == PulldownButtonAnimationState.opened;
 }
 
 /// Used to configure what horizontal part of the
-/// [PullDownButton.buttonBuilder] will be considered as an anchor to open
+/// [PulldownButton.buttonBuilder] will be considered as an anchor to open
 /// the menu from.
 ///
-/// It's best suited for situations where [PullDownButton.buttonBuilder] fills
+/// It's best suited for situations where [PulldownButton.buttonBuilder] fills
 /// the entire width of the screen and it is desired that menu opens from a
 /// specific button edge.
-enum PullDownMenuAnchor {
-  /// The menu will be "opened" from the [PullDownButton.buttonBuilder]
+enum PulldownMenuAnchor {
+  /// The menu will be "opened" from the [PulldownButton.buttonBuilder]
   /// start edge.
   ///
   /// A [TextDirection] must be available to determine if the start is the left
   /// or the right.
   start,
 
-  /// The menu will be "opened" from the [PullDownButton.buttonBuilder] center.
+  /// The menu will be "opened" from the [PulldownButton.buttonBuilder] center.
   center,
 
-  /// The menu will be "opened" from the [PullDownButton.buttonBuilder]
+  /// The menu will be "opened" from the [PulldownButton.buttonBuilder]
   /// end edge.
   ///
   /// A [TextDirection] must be available to determine if the end is the left
@@ -50,35 +50,35 @@ enum PullDownMenuAnchor {
   end,
 }
 
-/// Signature for the callback invoked when a [PullDownButton] is dismissed
+/// Signature for the callback invoked when a [PulldownButton] is dismissed
 /// without selecting an item.
 ///
-/// Used by [PullDownButton.onCanceled].
-typedef PullDownMenuCanceled = void Function();
+/// Used by [PulldownButton.onCanceled].
+typedef PulldownMenuCanceled = void Function();
 
-/// Signature used by [PullDownButton] to lazily construct the items shown when
+/// Signature used by [PulldownButton] to lazily construct the items shown when
 /// the button is pressed.
 ///
-/// Used by [PullDownButton.itemBuilder].
-typedef PullDownMenuItemBuilder =
-    List<PullDownMenuEntry> Function(BuildContext context);
+/// Used by [PulldownButton.itemBuilder].
+typedef PulldownMenuItemBuilder =
+    List<PulldownMenuEntry> Function(BuildContext context);
 
-/// Signature used by [PullDownButton] to build button widget.
+/// Signature used by [PulldownButton] to build button widget.
 ///
-/// Used by [PullDownButton.buttonBuilder].
-typedef PullDownMenuButtonBuilder =
+/// Used by [PulldownButton.buttonBuilder].
+typedef PulldownMenuButtonBuilder =
     Widget Function(BuildContext context, Future<void> Function() showMenu);
 
-/// Signature used by [PullDownButton] to create animation for
-/// [PullDownButton.buttonBuilder] when the pull-down menu is opened.
+/// Signature used by [PulldownButton] to create animation for
+/// [PulldownButton.buttonBuilder] when the pull-down menu is opened.
 ///
-/// [child] is a button created with [PullDownButton.buttonBuilder].
+/// [child] is a button created with [PulldownButton.buttonBuilder].
 ///
-/// Used by [PullDownButton.animationBuilder].
-typedef PullDownButtonAnimationBuilder =
+/// Used by [PulldownButton.animationBuilder].
+typedef PulldownButtonAnimationBuilder =
     Widget Function(
       BuildContext context,
-      PullDownButtonAnimationState state,
+      PulldownButtonAnimationState state,
       Widget child,
     );
 
@@ -97,12 +97,12 @@ class PulldownButton extends StatefulWidget {
     this.routeSettings,
   });
 
-  final PullDownMenuItemBuilder itemBuilder;
+  final PulldownMenuItemBuilder itemBuilder;
 
-  final PullDownMenuButtonBuilder buttonBuilder;
+  final PulldownMenuButtonBuilder buttonBuilder;
 
   /// Called when the user dismisses the pull-down menu.
-  final PullDownMenuCanceled? onCanceled;
+  final PulldownMenuCanceled? onCanceled;
 
   /// Whether the pull-down menu is anchored to the center, left, or right side
   /// of the [buttonBuilder].
@@ -110,7 +110,7 @@ class PulldownButton extends StatefulWidget {
   /// If `null` no anchoring will be involved.
   ///
   /// Defaults to `null`.
-  final PullDownMenuAnchor? buttonAnchor;
+  final PulldownMenuAnchor? buttonAnchor;
 
   /// Additional horizontal offset for the pull-down menu if the menu's desired
   /// position is not in the central third of the screen.
@@ -133,13 +133,13 @@ class PulldownButton extends StatefulWidget {
   final ScrollController? scrollController;
 
   /// Theme of the route used to display pull-down menu launched from this
-  /// [PullDownButton].
+  /// [PulldownButton].
   ///
-  /// If this property is null, then [PullDownMenuRouteTheme] from
-  /// [PullDownButtonTheme.routeTheme] is used.
+  /// If this property is null, then [PulldownMenuRouteTheme] from
+  /// [PulldownButtonTheme.routeTheme] is used.
   ///
-  /// If that's null, then [PullDownMenuRouteTheme.defaults] is used.
-  final PullDownMenuRouteTheme? routeTheme;
+  /// If that's null, then [PulldownMenuRouteTheme.defaults] is used.
+  final PulldownMenuRouteTheme? routeTheme;
 
   /// Custom animation for [buttonBuilder] when the pull-down menu is opening or
   /// closing.
@@ -148,7 +148,7 @@ class PulldownButton extends StatefulWidget {
   /// [buttonBuilder] as it is in iOS.
   ///
   /// If this property is null, then no animation will be used.
-  final PullDownButtonAnimationBuilder? animationBuilder;
+  final PulldownButtonAnimationBuilder? animationBuilder;
 
   /// Whether to use the root navigator to show the pull-down menu.
   ///
@@ -167,11 +167,11 @@ class PulldownButton extends StatefulWidget {
 
   /// Default animation builder for [animationBuilder].
   ///
-  /// If [state] is [PullDownButtonAnimationState.opened], apply opacity
+  /// If [state] is [PulldownButtonAnimationState.opened], apply opacity
   /// on [child] as it is in iOS.
   static Widget defaultAnimationBuilder(
     BuildContext context,
-    PullDownButtonAnimationState state,
+    PulldownButtonAnimationState state,
     Widget child,
   ) {
     final isOpen = state.isOpen;
@@ -190,7 +190,7 @@ class PulldownButton extends StatefulWidget {
 }
 
 class _PulldownButtonState extends State<PulldownButton> {
-  PullDownButtonAnimationState state = PullDownButtonAnimationState.closed;
+  PulldownButtonAnimationState state = PulldownButtonAnimationState.closed;
 
   Future<void> showButtonMenu() async {
     final navigator = Navigator.of(
@@ -227,7 +227,7 @@ class _PulldownButtonState extends State<PulldownButton> {
 
     final hasLeading = MenuConfig.menuHasLeading(items);
 
-    setState(() => state = PullDownButtonAnimationState.opened);
+    setState(() => state = PulldownButtonAnimationState.opened);
 
     final action = await _showMenu<VoidCallback>(
       context: context,
@@ -245,7 +245,7 @@ class _PulldownButtonState extends State<PulldownButton> {
 
     if (!mounted) return;
 
-    setState(() => state = PullDownButtonAnimationState.closed);
+    setState(() => state = PulldownButtonAnimationState.closed);
 
     if (action != null) {
       action.call();
@@ -263,13 +263,12 @@ class _PulldownButtonState extends State<PulldownButton> {
   }
 }
 
-/// Is used internally by [PullDownButton] and [showPullDownMenu] to show
-/// the pull-down menu.
+/// Is used internally by [PulldownButton] to show the pull-down menu.
 Future<VoidCallback?> _showMenu<VoidCallback>({
   required BuildContext context,
   required Rect buttonRect,
-  required List<PullDownMenuEntry> items,
-  required PullDownMenuRouteTheme? routeTheme,
+  required List<PulldownMenuEntry> items,
+  required PulldownMenuRouteTheme? routeTheme,
   required bool hasLeading,
   required Alignment animationAlignment,
   required double menuOffset,
@@ -306,24 +305,24 @@ Future<VoidCallback?> _showMenu<VoidCallback>({
 Rect _anchorToButtonPart(
   BuildContext context,
   Rect buttonRect,
-  PullDownMenuAnchor anchor,
+  PulldownMenuAnchor anchor,
 ) {
   final textDirection = Directionality.of(context);
 
   final side = switch (anchor) {
-    PullDownMenuAnchor.start when textDirection == TextDirection.ltr =>
+    PulldownMenuAnchor.start when textDirection == TextDirection.ltr =>
       buttonRect.left,
-    PullDownMenuAnchor.start => buttonRect.right,
-    PullDownMenuAnchor.center => buttonRect.center.dx,
-    PullDownMenuAnchor.end when textDirection == TextDirection.ltr =>
+    PulldownMenuAnchor.start => buttonRect.right,
+    PulldownMenuAnchor.center => buttonRect.center.dx,
+    PulldownMenuAnchor.end when textDirection == TextDirection.ltr =>
       buttonRect.right,
-    PullDownMenuAnchor.end => buttonRect.left,
+    PulldownMenuAnchor.end => buttonRect.left,
   };
 
   return Rect.fromLTRB(side, buttonRect.top, side, buttonRect.bottom);
 }
 
-/// Returns a barrier label for [PullDownMenuRoute].
+/// Returns a barrier label for [PulldownMenuRoute].
 String _barrierLabel(BuildContext context) {
   // Use this instead of `MaterialLocalizations.of(context)` because
   // [MaterialLocalizations] might be null in some cases.

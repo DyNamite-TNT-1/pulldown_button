@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/divider_theme.dart';
-import 'entry.dart';
-import 'item.dart';
+import '../../pulldown_button.dart';
 
 const double _kMenuDividerHeight = 0;
 const double _kMenuLargeDividerHeight = 8;
@@ -11,36 +9,36 @@ const double _kMenuLargeDividerHeight = 8;
 ///
 /// This widget adapts the [Divider] for use in pull-down menus.
 @immutable
-class PullDownMenuDivider extends StatelessWidget implements PullDownMenuEntry {
+class PulldownMenuDivider extends StatelessWidget implements PulldownMenuEntry {
   /// Creates a horizontal divider for a pull-down menu.
   @Deprecated(
     'Can be safely removed as the pull-down menu now automatically '
     'inserts dividers when needed. '
     'This feature was deprecated after v0.9.0.',
   )
-  const PullDownMenuDivider({super.key, this.color}) : _isLarge = false;
+  const PulldownMenuDivider({super.key, this.color}) : _isLarge = false;
 
   /// Creates a large horizontal divider for a pull-down menu.
-  const PullDownMenuDivider.large({super.key, this.color}) : _isLarge = true;
+  const PulldownMenuDivider.large({super.key, this.color}) : _isLarge = true;
 
   /// The color of the divider.
   ///
   /// If this property is null, then, depending on the constructor,
-  /// [PullDownMenuDividerTheme.dividerColor] or
-  /// [PullDownMenuDividerTheme.largeDividerColor] from
-  /// [PullDownButtonTheme.dividerTheme] is used.
+  /// [PulldownMenuDividerTheme.dividerColor] or
+  /// [PulldownMenuDividerTheme.largeDividerColor] from
+  /// [PulldownButtonTheme.dividerTheme] is used.
   ///
-  /// If that's null, then defaults from [PullDownMenuDividerTheme.defaults] are
+  /// If that's null, then defaults from [PulldownMenuDividerTheme.defaults] are
   /// used.
   final Color? color;
 
-  /// Whether this [PullDownMenuDivider] is large or not.
+  /// Whether this [PulldownMenuDivider] is large or not.
   final bool _isLarge;
 
   /// The height and thickness of the divider entry.
   ///
-  /// Can be 0 pixels ([PullDownMenuDivider]) or 8 pixels
-  /// ([PullDownMenuDivider.large]) depending on the constructor.
+  /// Can be 0 pixels ([PulldownMenuDivider]) or 8 pixels
+  /// ([PulldownMenuDivider.large]) depending on the constructor.
   double get height =>
       _isLarge ? _kMenuLargeDividerHeight : _kMenuDividerHeight;
 
@@ -50,13 +48,13 @@ class PullDownMenuDivider extends StatelessWidget implements PullDownMenuEntry {
     'inserts dividers when needed. '
     'This feature was deprecated after v0.9.0.',
   )
-  static List<PullDownMenuEntry> wrapWithDivider(
-    List<PullDownMenuEntry> items,
+  static List<PulldownMenuEntry> wrapWithDivider(
+    List<PulldownMenuEntry> items,
   ) => items;
 
   @override
   Widget build(BuildContext context) {
-    final theme = PullDownMenuDividerTheme.resolve(context);
+    final theme = PulldownMenuDividerTheme.resolve(context);
 
     final divider =
         color ?? (_isLarge ? theme.largeDividerColor : theme.dividerColor)!;
@@ -73,7 +71,7 @@ class PullDownMenuDivider extends StatelessWidget implements PullDownMenuEntry {
 /// This widget adapts the [Divider] and [VerticalDivider] for use in pull-down
 /// menus.
 @immutable
-class MenuSeparator extends StatelessWidget implements PullDownMenuEntry {
+class MenuSeparator extends StatelessWidget implements PulldownMenuEntry {
   /// Creates a small divider for a pull-down menu.
   ///
   /// Divider has a height/width and thickness of 0 logical pixels.
@@ -83,8 +81,8 @@ class MenuSeparator extends StatelessWidget implements PullDownMenuEntry {
   final Axis axis;
 
   /// Helper method that simplifies separation of pull-down menu items.
-  static List<PullDownMenuEntry> wrapVerticalList(
-    List<PullDownMenuEntry> items,
+  static List<PulldownMenuEntry> wrapVerticalList(
+    List<PulldownMenuEntry> items,
   ) {
     if (items.isEmpty || items.length == 1) {
       return items;
@@ -92,12 +90,12 @@ class MenuSeparator extends StatelessWidget implements PullDownMenuEntry {
 
     const divider = MenuSeparator._(axis: Axis.horizontal);
 
-    final list = <PullDownMenuEntry>[];
+    final list = <PulldownMenuEntry>[];
 
     for (var i = 0; i < items.length - 1; i++) {
       final item = items[i];
 
-      if (item is PullDownMenuDivider || items[i + 1] is PullDownMenuDivider) {
+      if (item is PulldownMenuDivider || items[i + 1] is PulldownMenuDivider) {
         list.add(item);
       } else {
         list.addAll([item, divider]);
@@ -131,7 +129,7 @@ class MenuSeparator extends StatelessWidget implements PullDownMenuEntry {
 
   @override
   Widget build(BuildContext context) {
-    final theme = PullDownMenuDividerTheme.resolve(context);
+    final theme = PulldownMenuDividerTheme.resolve(context);
 
     switch (axis) {
       case Axis.horizontal:

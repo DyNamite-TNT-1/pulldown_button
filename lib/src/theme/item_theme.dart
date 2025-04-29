@@ -2,21 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../pulldown_button.dart';
 import '_fonts.dart';
-import 'theme.dart';
 
 /// Defines the visual properties of the items in pull-down menus.
 ///
-/// Is used by [PullDownMenuItem], [PullDownMenuItem.selectable] and
-/// [PullDownMenuHeader].
+/// Is used by [PulldownMenuItem], [PulldownMenuItem.selectable] and
+/// [PulldownMenuHeader].
 ///
-/// All [PullDownMenuItemTheme] properties are `null` by default. When null,
+/// All [PulldownMenuItemTheme] properties are `null` by default. When null,
 /// the pull-down menu will use iOS 16 defaults specified in
-/// [PullDownMenuItemTheme.defaults].
+/// [PulldownMenuItemTheme.defaults].
 @immutable
-class PullDownMenuItemTheme with Diagnosticable {
-  /// Creates the set of properties used to configure [PullDownMenuItemTheme].
-  const PullDownMenuItemTheme({
+class PulldownMenuItemTheme with Diagnosticable {
+  /// Creates the set of properties used to configure [PulldownMenuItemTheme].
+  const PulldownMenuItemTheme({
     this.destructiveColor,
     this.checkmark,
     this.textStyle,
@@ -28,7 +28,7 @@ class PullDownMenuItemTheme with Diagnosticable {
   });
 
   /// Creates default set of properties used to configure
-  /// [PullDownMenuTitleTheme].
+  /// [PulldownMenuItemTheme].
   ///
   /// Default properties were taken from the Apple Design Resources Sketch file.
   ///
@@ -36,8 +36,8 @@ class PullDownMenuItemTheme with Diagnosticable {
   ///
   /// * Apple Design Resources Sketch file:
   ///   https://developer.apple.com/design/resources/
-  const factory PullDownMenuItemTheme.defaults(BuildContext context) =
-      _PullDownMenuItemThemeDefaults;
+  const factory PulldownMenuItemTheme.defaults(BuildContext context) =
+      _PulldownMenuItemThemeDefaults;
 
   /// The destructive color of items in the pull-down menu.
   ///
@@ -45,46 +45,40 @@ class PullDownMenuItemTheme with Diagnosticable {
   /// [iconActionTextStyle].
   final Color? destructiveColor;
 
-  /// The selection icon for selected [PullDownMenuItem.selectable].
+  /// The selection icon for selected [PulldownMenuItem.selectable].
   ///
-  /// These value is ignored for [PullDownMenuItem].
+  /// These value is ignored for [PulldownMenuItem].
   final IconData? checkmark;
 
   /// The text style of item's titles in the pull-down menu.
-  ///
-  /// These value is ignored for [PullDownMenuItem]s inside
-  /// [PullDownMenuActionsRow].
   final TextStyle? textStyle;
 
   /// The text style of item's subtitles in the pull-down menu.
-  ///
-  /// These value is ignored for [PullDownMenuItem]s inside
-  /// [PullDownMenuActionsRow].
   final TextStyle? subtitleStyle;
 
-  /// The text style of [PullDownMenuItem] items inside
-  /// [PullDownMenuActionsRow] in the pull-down menu.
+  /// The text style of [PulldownMenuItem] items inside
+  /// [PulldownMenuActionsRow] in the pull-down menu.
   ///
-  /// These value is ignored for any other [PullDownMenuItem] and
-  /// [PullDownMenuItem.selectable].
+  /// These value is ignored for any other [PulldownMenuItem] and
+  /// [PulldownMenuItem.selectable].
   final TextStyle? iconActionTextStyle;
 
-  /// The background color of [PullDownMenuItem] during hover interaction.
+  /// The background color of [PulldownMenuItem] during hover interaction.
   final Color? onHoverBackgroundColor;
 
-  /// The background color of [PullDownMenuItem] during press interaction.
+  /// The background color of [PulldownMenuItem] during press interaction.
   final Color? onPressedBackgroundColor;
 
-  /// The text color of [PullDownMenuItem] during hover interaction.
+  /// The text color of [PulldownMenuItem] during hover interaction.
   ///
   /// [onHoverTextColor] will be applied to [textStyle] and
   /// [iconActionTextStyle].
   final Color? onHoverTextColor;
 
-  /// The [PullDownButtonTheme.itemTheme] property of the ambient
-  /// [PullDownButtonTheme].
-  static PullDownMenuItemTheme? maybeOf(BuildContext context) =>
-      PullDownButtonTheme.maybeOf(context)?.itemTheme;
+  /// The [PulldownButtonTheme.itemTheme] property of the ambient
+  /// [PulldownButtonTheme].
+  static PulldownMenuItemTheme? maybeOf(BuildContext context) =>
+      PulldownButtonTheme.maybeOf(context)?.itemTheme;
 
   /// Returns an opacity level for disabled state for specific [Brightness].
   ///
@@ -95,22 +89,23 @@ class PullDownMenuItemTheme with Diagnosticable {
 
     return switch (brightness) {
       Brightness.dark => 0.55,
-      Brightness.light => 0.45
+      Brightness.light => 0.45,
     };
   }
 
-  /// The helper method to quickly resolve [PullDownMenuItemTheme] from
-  /// [PullDownButtonTheme.itemTheme] or [PullDownMenuItemTheme.defaults]
-  /// as well as from theme data from [PullDownMenuItem].
-  static PullDownMenuItemTheme resolve(
+  /// The helper method to quickly resolve [PulldownMenuItemTheme] from
+  /// [PulldownButtonTheme.itemTheme] or [PulldownMenuItemTheme.defaults]
+  /// as well as from theme data from [PulldownMenuItem].
+  static PulldownMenuItemTheme resolve(
     BuildContext context, {
-    required PullDownMenuItemTheme? itemTheme,
+    required PulldownMenuItemTheme? itemTheme,
   }) {
-    final theme = PullDownMenuItemTheme.maybeOf(context);
-    final defaults = PullDownMenuItemTheme.defaults(context);
+    final theme = PulldownMenuItemTheme.maybeOf(context);
+    final defaults = PulldownMenuItemTheme.defaults(context);
 
-    return PullDownMenuItemTheme(
-      destructiveColor: itemTheme?.destructiveColor ??
+    return PulldownMenuItemTheme(
+      destructiveColor:
+          itemTheme?.destructiveColor ??
           theme?.destructiveColor ??
           defaults.destructiveColor!,
       checkmark:
@@ -124,13 +119,16 @@ class PullDownMenuItemTheme with Diagnosticable {
       iconActionTextStyle: defaults.iconActionTextStyle!
           .merge(theme?.iconActionTextStyle)
           .merge(itemTheme?.iconActionTextStyle),
-      onHoverBackgroundColor: itemTheme?.onHoverBackgroundColor ??
+      onHoverBackgroundColor:
+          itemTheme?.onHoverBackgroundColor ??
           theme?.onHoverBackgroundColor ??
           defaults.onHoverBackgroundColor!,
-      onPressedBackgroundColor: itemTheme?.onPressedBackgroundColor ??
+      onPressedBackgroundColor:
+          itemTheme?.onPressedBackgroundColor ??
           theme?.onPressedBackgroundColor ??
           defaults.onPressedBackgroundColor!,
-      onHoverTextColor: itemTheme?.onHoverTextColor ??
+      onHoverTextColor:
+          itemTheme?.onHoverTextColor ??
           theme?.onHoverTextColor ??
           defaults.onHoverTextColor,
     );
@@ -138,7 +136,7 @@ class PullDownMenuItemTheme with Diagnosticable {
 
   /// Creates a copy of this object with the given fields replaced with the
   /// new values.
-  PullDownMenuItemTheme copyWith({
+  PulldownMenuItemTheme copyWith({
     IconData? checkmark,
     TextStyle? textStyle,
     TextStyle? subtitleStyle,
@@ -146,28 +144,27 @@ class PullDownMenuItemTheme with Diagnosticable {
     Color? onHoverBackgroundColor,
     Color? onPressedBackgroundColor,
     Color? onHoverTextColor,
-  }) =>
-      PullDownMenuItemTheme(
-        checkmark: checkmark ?? this.checkmark,
-        textStyle: textStyle ?? this.textStyle,
-        subtitleStyle: subtitleStyle ?? this.subtitleStyle,
-        iconActionTextStyle: iconActionTextStyle ?? this.iconActionTextStyle,
-        onHoverBackgroundColor:
-            onHoverBackgroundColor ?? this.onHoverBackgroundColor,
-        onPressedBackgroundColor:
-            onPressedBackgroundColor ?? this.onPressedBackgroundColor,
-        onHoverTextColor: onHoverTextColor ?? this.onHoverTextColor,
-      );
+  }) => PulldownMenuItemTheme(
+    checkmark: checkmark ?? this.checkmark,
+    textStyle: textStyle ?? this.textStyle,
+    subtitleStyle: subtitleStyle ?? this.subtitleStyle,
+    iconActionTextStyle: iconActionTextStyle ?? this.iconActionTextStyle,
+    onHoverBackgroundColor:
+        onHoverBackgroundColor ?? this.onHoverBackgroundColor,
+    onPressedBackgroundColor:
+        onPressedBackgroundColor ?? this.onPressedBackgroundColor,
+    onHoverTextColor: onHoverTextColor ?? this.onHoverTextColor,
+  );
 
   /// Linearly interpolate between two themes.
-  static PullDownMenuItemTheme lerp(
-    PullDownMenuItemTheme? a,
-    PullDownMenuItemTheme? b,
+  static PulldownMenuItemTheme lerp(
+    PulldownMenuItemTheme? a,
+    PulldownMenuItemTheme? b,
     double t,
   ) {
     if (identical(a, b) && a != null) return a;
 
-    return PullDownMenuItemTheme(
+    return PulldownMenuItemTheme(
       checkmark: _lerpIconData(a?.checkmark, b?.checkmark, t),
       textStyle: TextStyle.lerp(a?.textStyle, b?.textStyle, t),
       subtitleStyle: TextStyle.lerp(a?.subtitleStyle, b?.subtitleStyle, t),
@@ -192,21 +189,21 @@ class PullDownMenuItemTheme with Diagnosticable {
 
   @override
   int get hashCode => Object.hash(
-        checkmark,
-        textStyle,
-        subtitleStyle,
-        iconActionTextStyle,
-        onHoverBackgroundColor,
-        onPressedBackgroundColor,
-        onHoverTextColor,
-      );
+    checkmark,
+    textStyle,
+    subtitleStyle,
+    iconActionTextStyle,
+    onHoverBackgroundColor,
+    onPressedBackgroundColor,
+    onHoverTextColor,
+  );
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
 
-    return other is PullDownMenuItemTheme &&
+    return other is PulldownMenuItemTheme &&
         other.checkmark == checkmark &&
         other.textStyle == textStyle &&
         other.subtitleStyle == subtitleStyle &&
@@ -220,12 +217,8 @@ class PullDownMenuItemTheme with Diagnosticable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(
-        DiagnosticsProperty('checkmark', checkmark, defaultValue: null),
-      )
-      ..add(
-        DiagnosticsProperty('textStyle', textStyle, defaultValue: null),
-      )
+      ..add(DiagnosticsProperty('checkmark', checkmark, defaultValue: null))
+      ..add(DiagnosticsProperty('textStyle', textStyle, defaultValue: null))
       ..add(
         DiagnosticsProperty('subtitleStyle', subtitleStyle, defaultValue: null),
       )
@@ -258,14 +251,12 @@ class PullDownMenuItemTheme with Diagnosticable {
 
 IconData? _lerpIconData(IconData? a, IconData? b, double t) => t < 0.5 ? a : b;
 
-/// A set of default values for [PullDownMenuItemTheme].
+/// A set of default values for [PulldownMenuItemTheme].
 @immutable
-class _PullDownMenuItemThemeDefaults extends PullDownMenuItemTheme {
-  /// Creates [_PullDownMenuItemThemeDefaults].
-  const _PullDownMenuItemThemeDefaults(this.context)
-      : super(
-          checkmark: CupertinoIcons.checkmark,
-        );
+class _PulldownMenuItemThemeDefaults extends PulldownMenuItemTheme {
+  /// Creates [_PulldownMenuItemThemeDefaults].
+  const _PulldownMenuItemThemeDefaults(this.context)
+    : super(checkmark: CupertinoIcons.checkmark);
 
   /// A build context used to resolve [CupertinoDynamicColor]s defined in this
   /// theme.
@@ -274,7 +265,7 @@ class _PullDownMenuItemThemeDefaults extends PullDownMenuItemTheme {
   @override
   Color get destructiveColor => CupertinoColors.systemRed.resolveFrom(context);
 
-  /// The [PullDownMenuItemTheme.textStyle] as a constant.
+  /// The [PulldownMenuItemTheme.textStyle] as a constant.
   ///
   /// [textStyle] will resolve [kTextStyle] with [CupertinoColors.label]
   /// applied.
@@ -290,11 +281,10 @@ class _PullDownMenuItemThemeDefaults extends PullDownMenuItemTheme {
   );
 
   @override
-  TextStyle get textStyle => kTextStyle.copyWith(
-        color: CupertinoColors.label.resolveFrom(context),
-      );
+  TextStyle get textStyle =>
+      kTextStyle.copyWith(color: CupertinoColors.label.resolveFrom(context));
 
-  /// The [PullDownMenuItemTheme.subtitleStyle] as a constant.
+  /// The [PulldownMenuItemTheme.subtitleStyle] as a constant.
   ///
   /// [subtitleStyle] will resolve [kSubtitleStyle] with [kSubtitleColor]
   /// applied.
@@ -309,18 +299,17 @@ class _PullDownMenuItemThemeDefaults extends PullDownMenuItemTheme {
     letterSpacing: -0.41,
   );
 
-  /// The light and dark colors of [PullDownMenuItem.subtitle].
+  /// The light and dark colors of [PulldownMenuItem.subtitle].
   static const kSubtitleColor = CupertinoDynamicColor.withBrightness(
     color: Color.fromRGBO(60, 60, 67, 0.6),
     darkColor: Color.fromRGBO(235, 235, 245, 0.6),
   );
 
   @override
-  TextStyle get subtitleStyle => kSubtitleStyle.copyWith(
-        color: kSubtitleColor.resolveFrom(context),
-      );
+  TextStyle get subtitleStyle =>
+      kSubtitleStyle.copyWith(color: kSubtitleColor.resolveFrom(context));
 
-  /// The [PullDownMenuItemTheme.iconActionTextStyle] as a constant.
+  /// The [PulldownMenuItemTheme.iconActionTextStyle] as a constant.
   ///
   /// [iconActionTextStyle] will resolve [kIconActionTextStyle] with
   /// [CupertinoColors.label] applied.
@@ -337,10 +326,10 @@ class _PullDownMenuItemThemeDefaults extends PullDownMenuItemTheme {
 
   @override
   TextStyle get iconActionTextStyle => kIconActionTextStyle.copyWith(
-        color: CupertinoColors.label.resolveFrom(context),
-      );
+    color: CupertinoColors.label.resolveFrom(context),
+  );
 
-  /// The light and dark on pressed/on hover colors of [PullDownMenuItem].
+  /// The light and dark on pressed/on hover colors of [PulldownMenuItem].
   static const kOnPressedColor = CupertinoDynamicColor.withBrightness(
     color: Color.fromRGBO(0, 0, 0, 0.08),
     darkColor: Color.fromRGBO(255, 255, 255, 0.135),

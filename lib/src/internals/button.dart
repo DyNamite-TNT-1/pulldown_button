@@ -6,7 +6,6 @@ import 'package:pulldown_button/src/internals/utils/extensions.dart';
 
 import 'continuous_swipe.dart';
 
-
 /// Default menu gesture detector for applying on pressed color or on
 /// hover color, and providing builder method that exposes the `isHovered`
 /// state to descendant widgets.
@@ -111,40 +110,39 @@ class _MenuActionButtonState extends State<MenuActionButton> {
 
   @override
   Widget build(BuildContext context) => MouseRegion(
-        cursor: enabled && kIsWeb //
-            ? SystemMouseCursors.click
-            : MouseCursor.defer,
-        onEnter: onEnter,
-        onExit: onExit,
-        hitTestBehavior: HitTestBehavior.opaque,
-        child: GestureDetector(
-          onTap: onTap,
-          onTapDown: onTapDown,
-          onTapUp: onTapUp,
-          onTapCancel: onTapCancel,
-          behavior: HitTestBehavior.opaque,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: isPressed
+    cursor: enabled && kIsWeb ? SystemMouseCursors.click : MouseCursor.defer,
+    onEnter: onEnter,
+    onExit: onExit,
+    hitTestBehavior: HitTestBehavior.opaque,
+    child: GestureDetector(
+      onTap: onTap,
+      onTapDown: onTapDown,
+      onTapUp: onTapUp,
+      onTapCancel: onTapCancel,
+      behavior: HitTestBehavior.opaque,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color:
+              isPressed
                   ? widget.pressedColor
                   : isHovered
-                      ? widget.hoverColor
-                      : null,
-            ),
-            child: MenuActionButtonState(
-              isHovered: isHovered && !isPressed,
-              child: widget.child,
-            ),
-          ),
+                  ? widget.hoverColor
+                  : null,
         ),
-      );
+        child: MenuActionButtonState(
+          isHovered: isHovered && !isPressed,
+          child: widget.child,
+        ),
+      ),
+    ),
+  );
 }
 
-/// An inherited widget used to indicate if [PullDownMenuItem] is currently
+/// An inherited widget used to indicate if [PulldownMenuItem] is currently
 /// hovered.
 ///
 /// Is internally used by [MenuActionButton] to provide on hover state to all
-/// possible configurations of [PullDownMenuItem] and [PullDownMenuHeader].
+/// possible configurations of [PulldownMenuItem] and [PulldownMenuHeader].
 @immutable
 class MenuActionButtonState extends InheritedWidget {
   /// Creates [MenuActionButtonState].
@@ -154,14 +152,15 @@ class MenuActionButtonState extends InheritedWidget {
     required super.child,
   });
 
-  /// Whether a [PullDownMenuItem] is currently hovered.
+  /// Whether a [PulldownMenuItem] is currently hovered.
   final bool isHovered;
 
   /// Returns the current hover state from the closest [MenuActionButtonState]
   /// ancestor.
-  static bool of(BuildContext context) => context
-      .dependOnInheritedWidgetOfExactType<MenuActionButtonState>()!
-      .isHovered;
+  static bool of(BuildContext context) =>
+      context
+          .dependOnInheritedWidgetOfExactType<MenuActionButtonState>()!
+          .isHovered;
 
   @override
   bool updateShouldNotify(MenuActionButtonState oldWidget) =>

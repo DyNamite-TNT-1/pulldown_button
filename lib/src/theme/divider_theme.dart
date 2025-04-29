@@ -1,27 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-import 'theme.dart';
+import '../../pulldown_button.dart';
 
 /// Defines the visual properties of the dividers in pull-down menus.
 ///
-/// Is used by [PullDownMenuDivider], [PullDownMenuDivider.large], and vertical
-/// dividers in [PullDownMenuActionsRow].
+/// Is used by [PulldownMenuDivider], [PulldownMenuDivider.large].
 ///
-/// All [PullDownMenuDividerTheme] properties are `null` by default. When null,
+/// All [PulldownMenuDividerTheme] properties are `null` by default. When null,
 /// the pull-down menu will use iOS 16 defaults specified in
-/// [PullDownMenuDividerTheme.defaults].
+/// [PulldownMenuDividerTheme.defaults].
 @immutable
-class PullDownMenuDividerTheme with Diagnosticable {
+class PulldownMenuDividerTheme with Diagnosticable {
   /// Creates the set of properties used to configure
-  /// [PullDownMenuDividerTheme].
-  const PullDownMenuDividerTheme({
-    this.dividerColor,
-    this.largeDividerColor,
-  });
+  /// [PulldownMenuDividerTheme].
+  const PulldownMenuDividerTheme({this.dividerColor, this.largeDividerColor});
 
   /// Creates default set of properties used to configure
-  /// [PullDownMenuRouteTheme].
+  /// [PulldownMenuRouteTheme].
   ///
   /// Default properties were taken from the Apple Design Resources Sketch file.
   ///
@@ -29,52 +25,54 @@ class PullDownMenuDividerTheme with Diagnosticable {
   ///
   /// * Apple Design Resources Sketch file:
   ///   https://developer.apple.com/design/resources/
-  const factory PullDownMenuDividerTheme.defaults(BuildContext context) =
-      _PullDownMenuDividerDefaults;
+  const factory PulldownMenuDividerTheme.defaults(BuildContext context) =
+      _PulldownMenuDividerDefaults;
 
-  /// The color of the [PullDownMenuDivider].
+  /// The color of the [PulldownMenuDivider].
   final Color? dividerColor;
 
-  /// The color of the [PullDownMenuDivider.large].
+  /// The color of the [PulldownMenuDivider.large].
   final Color? largeDividerColor;
 
-  /// The [PullDownButtonTheme.dividerTheme] property of the ambient
-  /// [PullDownButtonTheme].
-  static PullDownMenuDividerTheme? maybeOf(BuildContext context) =>
-      PullDownButtonTheme.maybeOf(context)?.dividerTheme;
+  /// The [PulldownButtonTheme.dividerTheme] property of the ambient
+  /// [PulldownButtonTheme].
+  static PulldownMenuDividerTheme? maybeOf(BuildContext context) =>
+      PulldownButtonTheme.maybeOf(context)?.dividerTheme;
 
-  /// The helper method to quickly resolve [PullDownMenuDividerTheme] from
-  /// [PullDownButtonTheme.dividerTheme] or [PullDownMenuDividerTheme.defaults].
-  static PullDownMenuDividerTheme resolve(BuildContext context) {
-    final theme = PullDownMenuDividerTheme.maybeOf(context);
-    final defaults = PullDownMenuDividerTheme.defaults(context);
+  /// The helper method to quickly resolve [PulldownMenuDividerTheme] from
+  /// [PulldownButtonTheme.dividerTheme] or [PulldownMenuDividerTheme.defaults].
+  static PulldownMenuDividerTheme resolve(BuildContext context) {
+    final theme = PulldownMenuDividerTheme.maybeOf(context);
+    final defaults = PulldownMenuDividerTheme.defaults(context);
 
     return theme ?? defaults;
   }
 
   /// Creates a copy of this object with the given fields replaced with the
   /// new values.
-  PullDownMenuDividerTheme copyWith({
+  PulldownMenuDividerTheme copyWith({
     Color? dividerColor,
     Color? largeDividerColor,
-  }) =>
-      PullDownMenuDividerTheme(
-        dividerColor: dividerColor ?? this.dividerColor,
-        largeDividerColor: largeDividerColor ?? this.largeDividerColor,
-      );
+  }) => PulldownMenuDividerTheme(
+    dividerColor: dividerColor ?? this.dividerColor,
+    largeDividerColor: largeDividerColor ?? this.largeDividerColor,
+  );
 
   /// Linearly interpolate between two themes.
-  static PullDownMenuDividerTheme lerp(
-    PullDownMenuDividerTheme? a,
-    PullDownMenuDividerTheme? b,
+  static PulldownMenuDividerTheme lerp(
+    PulldownMenuDividerTheme? a,
+    PulldownMenuDividerTheme? b,
     double t,
   ) {
     if (identical(a, b) && a != null) return a;
 
-    return PullDownMenuDividerTheme(
+    return PulldownMenuDividerTheme(
       dividerColor: Color.lerp(a?.dividerColor, b?.dividerColor, t),
-      largeDividerColor:
-          Color.lerp(a?.largeDividerColor, b?.largeDividerColor, t),
+      largeDividerColor: Color.lerp(
+        a?.largeDividerColor,
+        b?.largeDividerColor,
+        t,
+      ),
     );
   }
 
@@ -86,7 +84,7 @@ class PullDownMenuDividerTheme with Diagnosticable {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
 
-    return other is PullDownMenuDividerTheme &&
+    return other is PulldownMenuDividerTheme &&
         other.dividerColor == dividerColor &&
         other.largeDividerColor == largeDividerColor;
   }
@@ -95,9 +93,7 @@ class PullDownMenuDividerTheme with Diagnosticable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(
-        ColorProperty('dividerColor', dividerColor, defaultValue: null),
-      )
+      ..add(ColorProperty('dividerColor', dividerColor, defaultValue: null))
       ..add(
         ColorProperty(
           'largeDividerColor',
@@ -108,23 +104,23 @@ class PullDownMenuDividerTheme with Diagnosticable {
   }
 }
 
-/// A set of default values for [PullDownMenuDividerTheme].
+/// A set of default values for [PulldownMenuDividerTheme].
 @immutable
-class _PullDownMenuDividerDefaults extends PullDownMenuDividerTheme {
-  /// Creates [_PullDownMenuDividerDefaults].
-  const _PullDownMenuDividerDefaults(this.context);
+class _PulldownMenuDividerDefaults extends PulldownMenuDividerTheme {
+  /// Creates [_PulldownMenuDividerDefaults].
+  const _PulldownMenuDividerDefaults(this.context);
 
   /// A build context used to resolve [CupertinoDynamicColor]s defined in this
   /// theme.
   final BuildContext context;
 
-  /// The light and dark colors of the [PullDownMenuDivider].
+  /// The light and dark colors of the [PulldownMenuDivider].
   static const kDividerColor = CupertinoDynamicColor.withBrightness(
     color: Color.fromRGBO(17, 17, 17, 0.3),
     darkColor: Color.fromRGBO(217, 217, 217, 0.3),
   );
 
-  /// The light and dark colors of the [PullDownMenuDivider.large].
+  /// The light and dark colors of the [PulldownMenuDivider.large].
   static const kLargeDividerColor = CupertinoDynamicColor.withBrightness(
     color: Color.fromRGBO(0, 0, 0, 0.08),
     darkColor: Color.fromRGBO(0, 0, 0, 0.16),

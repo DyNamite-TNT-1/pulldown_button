@@ -47,7 +47,7 @@ class MenuBody extends StatefulWidget {
   });
 
   /// Items to show in the menu.
-  final List<PullDownMenuEntry> items;
+  final List<PulldownMenuEntry> items;
 
   /// A scroll controller that can be used to control the scrolling of the
   /// [items] in the menu.

@@ -22,12 +22,12 @@ class RoutePulldownMenu extends StatelessWidget {
   });
 
   /// Items to show in the menu.
-  final List<PullDownMenuEntry> items;
+  final List<PulldownMenuEntry> items;
 
   /// A per-menu custom theme.
   ///
-  /// Final theme is resolved using [PullDownMenuRouteTheme.resolve].
-  final PullDownMenuRouteTheme? routeTheme;
+  /// Final theme is resolved using [PulldownMenuRouteTheme.resolve].
+  final PulldownMenuRouteTheme? routeTheme;
 
   /// An animation provided by [PulldownMenuRoute] for scale, fade, and size
   /// transitions.
@@ -41,7 +41,7 @@ class RoutePulldownMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = PullDownMenuRouteTheme.resolve(
+    final theme = PulldownMenuRouteTheme.resolve(
       context,
       routeTheme: routeTheme,
     );
@@ -61,8 +61,6 @@ class RoutePulldownMenu extends StatelessWidget {
 
     final clampedAnimation = ClampedAnimation(animation);
 
-    final isInAccessibilityMode = TextUtils.isInAccessibilityMode(context);
-
     return ScaleTransition(
       scale: animation,
       alignment: alignment,
@@ -78,12 +76,7 @@ class RoutePulldownMenu extends StatelessWidget {
             child: FadeTransition(
               opacity: clampedAnimation,
               child: AnimatedMenuContainer(
-                constraints: BoxConstraints.tightFor(
-                  width:
-                      isInAccessibilityMode
-                          ? theme.accessibilityWidth
-                          : theme.width,
-                ),
+                constraints: BoxConstraints.tightFor(width: theme.width),
                 child: SizeTransition(
                   axisAlignment: -1,
                   sizeFactor: clampedAnimation,

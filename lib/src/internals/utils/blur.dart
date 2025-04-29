@@ -10,7 +10,7 @@ class BlurUtils {
   /// Returns false if [color] has no transparency. If so, [BackdropFilter] will
   /// not be used since it will be redundant. Also, in some cases, this might
   /// help with performance or visual bugs.
-  static bool useBackdropFilter(Color color) => color.alpha != 0xFF;
+  static bool useBackdropFilter(Color color) => color.a != 0xFF;
 
   /// Menu background blur.
   ///
